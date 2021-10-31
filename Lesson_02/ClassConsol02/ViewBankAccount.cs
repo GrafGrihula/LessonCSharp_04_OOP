@@ -46,7 +46,7 @@ namespace Finances
             }
             else
             {
-                consoleLine.ConsoleWrite(ConsoleColor.Red, "Неверный ввод!");
+                consoleLine.WriteEnd(ConsoleColor.Red, "Неверный ввод!");
             }
 
             ViewAccount();

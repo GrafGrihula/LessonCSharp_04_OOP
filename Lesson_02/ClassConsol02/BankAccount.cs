@@ -16,6 +16,8 @@ namespace Finances
             SavingsAccount = 4              // Сберегательный счёт
         }
 
+        private float _sum;
+
         ConsoleLine consoleLine = new ConsoleLine();
 
         public string TypeOfBankAccount
@@ -52,6 +54,19 @@ namespace Finances
             } 
         }
 
+        public float Sum
+        {
+            get
+            {
+                return _sum;
+            }
+
+            set
+            {
+                _sum = value;
+            }
+        }
+
 
         public BankAccount() : this(0)
         {
@@ -76,30 +91,34 @@ namespace Finances
             _balance = balance;
         }
 
-        public float UpLoad(float balance)
+        public float SumRead()
         {
             Console.ResetColor();
-            Console.Write("Введите сумму для пополнения счёта: ");
             var sum = float.Parse(Console.ReadLine().Trim());
-            _balance += sum;
+            return sum;
+        }
 
-            consoleLine.ConsoleWrite(ConsoleColor.Green, "Успешно!");
+        public float UpLoad(float balance)
+        {
+            consoleLine.InputSum(ConsoleColor.White, "Сумма пополнения: ");
+            _balance += SumRead();
+
+            consoleLine.WriteEnd(ConsoleColor.Green, "Успешно!");
 
             return _balance; 
         }
 
         public float DownLoad(float balance)
         {
-            Console.ResetColor();
-            Console.Write("Введите сумму для снятия со счёта: ");
-            var sum = float.Parse(Console.ReadLine().Trim());
+            consoleLine.InputSum(ConsoleColor.White, "Сумма снятия: ");
+            var sum = SumRead();
             if (_balance < sum)
             {
-                consoleLine.ConsoleWrite(ConsoleColor.Red, "Недостаточно средств!");
+                consoleLine.WriteEnd(ConsoleColor.Red, "Недостаточно средств!");
             }
             else
             {
-                consoleLine.ConsoleWrite(ConsoleColor.Green, "Успешно!");
+                consoleLine.WriteEnd(ConsoleColor.Green, "Успешно!");
                 _balance -= sum;
             }
 
